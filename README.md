@@ -1,6 +1,7 @@
 # Unity Bounding Volume Heirachy
 
-Dynamic Unity 3d BVH - 3d Bounding Volume Hierarchy
+Dynamic Unity 3d BVH - 3d Bounding Volume Hierarchy.
+
 Modified from David Jeske's [SimpleScene](https://github.com/jeske/SimpleScene/tree/master/SimpleScene/Util/ssBVH)
 
 ### About
@@ -10,7 +11,7 @@ volume and answering geometric queries about them; such as ray, box, and sphere 
 
 It includes an efficient algorithm for incrementally re-optimizing the BVH when contained objects move. This variation works in Unity and supports GameObjects.
 
-For more information about what a BVH is, and about how to use this code, see the CodeProject article:
+For more information about what a BVH is, and about how to use this code, see David's CodeProject article:
 
 * [Dynamic Bounding Volume Hierarchy in C#](https://www.codeproject.com/Articles/832957/Dynamic-Bounding-Volume-Hiearchy-in-Csharp)
 
