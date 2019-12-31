@@ -23,10 +23,10 @@ For more information about what a BVH is, and about how to use this code, see th
 <td> The code for managing, traversing, and optimizing the BVH </td></tr>
 <tr>
 <td>BVHGameObjectAdaptor.cs</td>
-<td> A example IBVHNodeAdaptor GameObject integration.</td></tr>
+<td> A IBVHNodeAdaptor with GameObject integration.</td></tr>
 <tr>
 <td>BVHSphereAdaptor.cs</td>
-<td> An example IBVHNodeAdaptor for placing spheres in the BVH.</td></tr>
+<td> An example IBVHNodeAdaptor for spheres in the BVH.</td></tr>
 <tr>
 <td>IBVHNodeAdaptor.cs</td>
 <td> Base interface for any BVHNodeAdaptor. Implement this to create a new adaptor.</td></tr>
