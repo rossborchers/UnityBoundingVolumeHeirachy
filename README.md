@@ -1,5 +1,7 @@
 # Unity Bounding Volume Heirachy
 
+![BVH GIF](https://media.giphy.com/media/ZaomLtyboZSp9zl6WY/giphy.gif)
+
 Dynamic Unity 3d BVH - 3d Bounding Volume Hierarchy.
 
 Modified from David Jeske's [SimpleScene](https://github.com/jeske/SimpleScene/tree/master/SimpleScene/Util/ssBVH)
@@ -46,6 +48,3 @@ For more information about what a BVH is, and about how to use this code, see Da
 * [Space Partitioning: Octree vs. BVH](http://thomasdiewald.com/blog/?p=1488)
 * [Dynamic Bounding Volume Hiearchy in C#](https://www.codeproject.com/Articles/832957/Dynamic-Bounding-Volume-Hiearchy-in-Csharp)
 * [SimpleScene](https://github.com/jeske/SimpleScene/tree/master/SimpleScene/Util/ssBVH)
-
-### Pictures
-![BVH GIF](https://media.giphy.com/media/ZaomLtyboZSp9zl6WY/giphy.gif)
