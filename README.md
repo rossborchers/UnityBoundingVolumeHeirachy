@@ -1,4 +1,4 @@
-# Unity Bounding Volume Heirachy
+# Unity Bounding Volume Hierachy
 
 ![BVH GIF](https://media.giphy.com/media/ZaomLtyboZSp9zl6WY/giphy.gif)
 

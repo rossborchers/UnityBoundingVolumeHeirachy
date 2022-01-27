@@ -202,6 +202,26 @@ namespace DataStructures
             if (n.Left != null) GetAllNodeMatriciesRecursive(n.Left, ref matricies, depth + 1);
         }
 
+		public Matrix4x4 GetNodeMatrix(BVHNode<T> node) => Matrix4x4.Translate(node.Box.center) * Matrix4x4.Scale(node.Box.size);
+		
+
+		public void RenderNode(BVHNode<T> node) {
+			Matrix4x4 mat = GetNodeMatrix(node);
+			List<Matrix4x4> matrices = new List<Matrix4x4>();
+			matrices.Add(mat);
+			Mesh mesh = new Mesh();
+            mesh.SetVertices(vertices);
+            mesh.SetIndices(indices, MeshTopology.Lines, 0);
+			if(_debugRenderMaterial == null)
+			{
+				_debugRenderMaterial = new Material(Shader.Find("Standard"))
+				{
+					enableInstancing = true
+				};
+			}
+			Graphics.DrawMeshInstanced(mesh, 0, _debugRenderMaterial, matrices);
+		}
+
         public void RenderDebug()
         {
             if (!SystemInfo.supportsInstancing)
@@ -225,6 +245,12 @@ namespace DataStructures
                         enableInstancing = true
                     };
                 }
+
+				int iterations = (int)Mathf.Floor((float)matricies.Count / 1023.0f);
+				for (int i = 0; i < iterations; i++) {
+					Graphics.DrawMeshInstanced(mesh, 0, _debugRenderMaterial, matricies.GetRange(0, 1023));
+					matricies.RemoveRange(0, 1023);
+				}
                 Graphics.DrawMeshInstanced(mesh, 0, _debugRenderMaterial, matricies);
             }
         }
