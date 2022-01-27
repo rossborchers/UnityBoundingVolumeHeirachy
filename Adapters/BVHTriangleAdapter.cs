@@ -13,6 +13,14 @@ namespace DataStructures {
         public Vector3 a, b, c;
     }
 
+    public class BVHRayHitTest {
+        public BVHRayHitTest(Ray _ray) {
+            ray = _ray;
+        }
+        public bool NodeTraversalTest(Bounds box) => box.IntersectRay(ray);
+        public Ray ray { get; set; }
+    }
+    
     public class BVHTriangleAdapter : IBVHNodeAdapter<Triangle> {
         private BVH<Triangle> _bvh;
         private Dictionary<Triangle, BVHNode<Triangle>> triangeToLeafMap = new Dictionary<Triangle, BVHNode<Triangle>>();

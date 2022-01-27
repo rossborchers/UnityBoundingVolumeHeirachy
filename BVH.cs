@@ -79,6 +79,20 @@ namespace DataStructures
 			return hits;
 		}
 
+		public SortedList<float, BVHNode<T>> SortedTraverse(NodeTraversalTest hitTest) {
+			SortedList<float, BVHNode<T>> sortedHit = new SortedList<float, BVHNode<T>>();
+			void traverse(BVHNode<T> node, NodeTraversalTest hitTest, SortedList<float, BVHNode<T>> hitList) {
+				if (node == null) return;
+				if (hitTest(node.Box)) {
+					hitList[Vector3.Magnitude(node.Box.size)] = node;
+					traverse(node.Left, hitTest, hitList);
+					traverse(node.Right, hitTest, hitList);
+				}
+			}
+			traverse(rootBVH, hitTest, sortedHit);
+			return sortedHit;
+		}
+
 	    /*	
         public List<BVHNode<T> Traverse(Ray ray)
 		{
