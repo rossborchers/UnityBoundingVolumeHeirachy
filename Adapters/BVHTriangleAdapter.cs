@@ -20,7 +20,7 @@ namespace DataStructures {
         public bool NodeTraversalTest(Bounds box) => box.IntersectRay(ray);
         public Ray ray { get; set; }
     }
-    
+
     public class BVHTriangleAdapter : IBVHNodeAdapter<Triangle> {
         private BVH<Triangle> _bvh;
         private Dictionary<Triangle, BVHNode<Triangle>> triangeToLeafMap = new Dictionary<Triangle, BVHNode<Triangle>>();

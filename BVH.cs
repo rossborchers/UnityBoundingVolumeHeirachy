@@ -54,6 +54,7 @@ namespace DataStructures
         public BVHNode<T> rootBVH;
         public IBVHNodeAdapter<T> nAda;
         public readonly int LEAF_OBJ_MAX;
+		public readonly float MIN_NODE_VOLUME;
         public int nodeCount = 0;
         public int maxDepth = 0;
 
@@ -173,9 +174,10 @@ namespace DataStructures
 		/// <param name="nodeAdaptor"></param>
 		/// <param name="objects"></param>
 		/// <param name="LEAF_OBJ_MAX">WARNING! currently this must be 1 to use dynamic BVH updates</param>
-		public BVH(IBVHNodeAdapter<T> nodeAdaptor, List<T> objects, int LEAF_OBJ_MAX = 1)
+		public BVH(IBVHNodeAdapter<T> nodeAdaptor, List<T> objects, int LEAF_OBJ_MAX = 1, float MIN_NODE_VOLUME = 0.7f)
 		{
 			this.LEAF_OBJ_MAX = LEAF_OBJ_MAX;
+			this.MIN_NODE_VOLUME = MIN_NODE_VOLUME;
 			nodeAdaptor.BVH = this;
 			this.nAda = nodeAdaptor;
 

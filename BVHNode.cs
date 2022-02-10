@@ -903,8 +903,10 @@ namespace DataStructures
 				// if we have more than (bvh.LEAF_OBJECT_COUNT) objects, then compute the volume and split
 				GObjects = gobjectlist;
 				ComputeVolume(nAda);
-				SplitNode(nAda);
-				ChildRefit(nAda, propagate: false);
+				if (Box.size.magnitude > bvh.MIN_NODE_VOLUME) {
+					SplitNode(nAda);
+					ChildRefit(nAda, propagate: false);
+				}
 			}
 		}
 
