@@ -4,13 +4,10 @@ using System.Collections.Generic;
 
 
 namespace DataStructures {
-    public struct Triangle {
-        public Triangle(Vector3 _a, Vector3 _b, Vector3 _c) {
-            a = _a;
-            b = _b;
-            c = _c;
-        }
-        public Vector3 a, b, c;
+    public interface Triangle {
+        Vector3 a { get; set; }
+        Vector3 b { get; set; }
+        Vector3 c { get; set; }
     }
 
     public class BVHRayHitTest {

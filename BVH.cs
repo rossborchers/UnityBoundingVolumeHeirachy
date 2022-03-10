@@ -94,6 +94,24 @@ namespace DataStructures
 			return sortedHit;
 		}
 
+		public bool IntersectRay(Ray ray, out BVHNode<T> nodeHit) {
+			BVHNode<T> _hit = null;
+			void traverse(BVHNode<T> node) {
+				if (node == null) return;
+				if (node.Box.IntersectRay(ray)) {
+					if (node.IsLeaf) {
+						_hit = node;
+						return;
+					}
+					traverse(node.Left);
+					traverse(node.Right);
+				}
+			}
+			traverse(rootBVH);
+			nodeHit = _hit;
+			return nodeHit != null && nodeHit.IsLeaf;
+		}
+
 	    /*	
         public List<BVHNode<T> Traverse(Ray ray)
 		{
