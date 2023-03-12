@@ -54,6 +54,7 @@ namespace DataStructures
         public BVHNode<T> rootBVH;
         public IBVHNodeAdapter<T> nAda;
         public readonly int LEAF_OBJ_MAX;
+		public readonly float MIN_NODE_VOLUME;
         public int nodeCount = 0;
         public int maxDepth = 0;
 
@@ -77,6 +78,38 @@ namespace DataStructures
 			var hits = new List<BVHNode<T>>();
 			this._traverse(rootBVH, hitTest, hits);
 			return hits;
+		}
+
+		public SortedList<float, BVHNode<T>> SortedTraverse(NodeTraversalTest hitTest) {
+			SortedList<float, BVHNode<T>> sortedHit = new SortedList<float, BVHNode<T>>();
+			void traverse(BVHNode<T> node, NodeTraversalTest hitTest, SortedList<float, BVHNode<T>> hitList) {
+				if (node == null) return;
+				if (hitTest(node.Box)) {
+					hitList[Vector3.Magnitude(node.Box.size)] = node;
+					traverse(node.Left, hitTest, hitList);
+					traverse(node.Right, hitTest, hitList);
+				}
+			}
+			traverse(rootBVH, hitTest, sortedHit);
+			return sortedHit;
+		}
+
+		public bool IntersectRay(Ray ray, out BVHNode<T> nodeHit) {
+			BVHNode<T> _hit = null;
+			void traverse(BVHNode<T> node) {
+				if (node == null) return;
+				if (node.Box.IntersectRay(ray)) {
+					if (node.IsLeaf) {
+						_hit = node;
+						return;
+					}
+					traverse(node.Left);
+					traverse(node.Right);
+				}
+			}
+			traverse(rootBVH);
+			nodeHit = _hit;
+			return nodeHit != null && nodeHit.IsLeaf;
 		}
 
 	    /*	
@@ -159,9 +192,10 @@ namespace DataStructures
 		/// <param name="nodeAdaptor"></param>
 		/// <param name="objects"></param>
 		/// <param name="LEAF_OBJ_MAX">WARNING! currently this must be 1 to use dynamic BVH updates</param>
-		public BVH(IBVHNodeAdapter<T> nodeAdaptor, List<T> objects, int LEAF_OBJ_MAX = 1)
+		public BVH(IBVHNodeAdapter<T> nodeAdaptor, List<T> objects, int LEAF_OBJ_MAX = 1, float MIN_NODE_VOLUME = 0.7f)
 		{
 			this.LEAF_OBJ_MAX = LEAF_OBJ_MAX;
+			this.MIN_NODE_VOLUME = MIN_NODE_VOLUME;
 			nodeAdaptor.BVH = this;
 			this.nAda = nodeAdaptor;
 
@@ -202,6 +236,26 @@ namespace DataStructures
             if (n.Left != null) GetAllNodeMatriciesRecursive(n.Left, ref matricies, depth + 1);
         }
 
+		public Matrix4x4 GetNodeMatrix(BVHNode<T> node) => Matrix4x4.Translate(node.Box.center) * Matrix4x4.Scale(node.Box.size);
+		
+
+		public void RenderNode(BVHNode<T> node) {
+			Matrix4x4 mat = GetNodeMatrix(node);
+			List<Matrix4x4> matrices = new List<Matrix4x4>();
+			matrices.Add(mat);
+			Mesh mesh = new Mesh();
+            mesh.SetVertices(vertices);
+            mesh.SetIndices(indices, MeshTopology.Lines, 0);
+			if(_debugRenderMaterial == null)
+			{
+				_debugRenderMaterial = new Material(Shader.Find("Standard"))
+				{
+					enableInstancing = true
+				};
+			}
+			Graphics.DrawMeshInstanced(mesh, 0, _debugRenderMaterial, matrices);
+		}
+
         public void RenderDebug()
         {
             if (!SystemInfo.supportsInstancing)
@@ -225,6 +279,12 @@ namespace DataStructures
                         enableInstancing = true
                     };
                 }
+
+				int iterations = (int)Mathf.Floor((float)matricies.Count / 1023.0f);
+				for (int i = 0; i < iterations; i++) {
+					Graphics.DrawMeshInstanced(mesh, 0, _debugRenderMaterial, matricies.GetRange(0, 1023));
+					matricies.RemoveRange(0, 1023);
+				}
                 Graphics.DrawMeshInstanced(mesh, 0, _debugRenderMaterial, matricies);
             }
         }
