@@ -1,0 +1,31 @@
+{
+  "name": "com.rossborchers.unity-bounding-volume-hierarchy",
+  "displayName": "[Library] Bounding Volume Hierarchy",
+  "author": {
+    "name": "rossborchers",
+    "url": "https://www.rossborchers.com/"
+  },
+  "version": "1.0.0",
+  "unity": "2021.3",
+  "description": "A bounding volume hierarchy (BVH) is a tree structure on a set of geometric objects. All geometric objects, that form the leaf nodes of the tree, are wrapped in bounding volumes.",
+  "keywords": [
+    "open-source",
+    "bvh",
+    "bounding-volume-hierarchy",
+    "unity3d",
+    "tree",
+    "geometry",
+    "bounding-volume",
+    "bounding-volumes",
+    "graphics",
+    "point-cloud",
+    "pointcloud",
+    "poisson",
+    "screened-poisson",
+    "meshsing",
+    "isosurface",
+    "bounds-hierarchy",
+    "tree-mesh-bvh"
+  ],
+  "license": "Apache License 2.0"
+}
